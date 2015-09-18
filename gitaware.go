@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 )
 
-var pluginCommand = "push-metadata"
+var pluginCommand = "git-push"
 
 type PushMetadataPlugin struct {
 }
@@ -30,13 +30,12 @@ func (c *PushMetadataPlugin) Run(cliConnection plugin.CliConnection, args []stri
 	if err != nil {
 		fmt.Println("cli error " + err.Error())
 	}
-	// Do your logic.
 	// Pass the args to cf push
 }
 
 func (c *PushMetadataPlugin) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
-		Name: "PushMetadataPlugin",
+		Name: "GitPushPlugin",
 		Version: plugin.VersionType{
 			Major: 1,
 			Minor: 0,
@@ -50,7 +49,7 @@ func (c *PushMetadataPlugin) GetMetadata() plugin.PluginMetadata {
 				// UsageDetails is optional
 				// It is used to show help of usage of each command
 				UsageDetails: plugin.Usage{
-					Usage: "push-metadata\n   cf push-metadata",
+					Usage: pluginCommand + "push-metadata\n   cf " + pluginCommand,
 				},
 			},
 		},

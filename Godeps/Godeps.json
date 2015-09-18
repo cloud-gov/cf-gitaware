@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/18F/cf-push-metadata",
+	"ImportPath": "github.com/18F/cf-gitaware",
 	"GoVersion": "go1.5",
 	"Deps": [
 		{
