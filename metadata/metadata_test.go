@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-const testRepoPath = "tmp"
+const testRepoPath = "./tmp"
 
 // https://gobyexample.com/writing-files
 func check(e error) {
@@ -40,5 +40,9 @@ func createTestRepo() {
 func TestGetRevision(t *testing.T) {
 	createTestRepo()
 
-	// TODO
+	rev := GetRevision(testRepoPath)
+	chars := len(rev)
+	if chars != 41 {
+		t.Errorf("Expected GetRevision to return a 41-character string, Found %s\n", rev)
+	}
 }
