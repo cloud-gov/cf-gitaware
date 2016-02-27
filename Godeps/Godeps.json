@@ -1,11 +1,16 @@
 {
 	"ImportPath": "github.com/18F/cf-gitaware",
-	"GoVersion": "go1.5",
+	"GoVersion": "go1.6",
 	"Deps": [
 		{
 			"ImportPath": "github.com/cloudfoundry/cli/plugin",
-			"Comment": "v6.12.3-18-gecdf2fe",
-			"Rev": "ecdf2feb1e7e96aa31970af2666781dd6f1f6441"
+			"Comment": "v6.12.4-76-g41e1362",
+			"Rev": "41e1362e1d211fbc288dfe7e8b94b1db39d3135e"
+		},
+		{
+			"ImportPath": "github.com/cloudfoundry/cli/plugin/models",
+			"Comment": "v6.12.4-76-g41e1362",
+			"Rev": "41e1362e1d211fbc288dfe7e8b94b1db39d3135e"
 		},
 		{
 			"ImportPath": "github.com/codegangsta/inject",
