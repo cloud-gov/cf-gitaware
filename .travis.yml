@@ -1,6 +1,8 @@
 language: go
 go:
 - '1.6'
-install: godep restore
+install:
+- go get github.com/tools/godep
+- godep restore
 before_script:
-  - go vet ./...
+- go vet ./...
