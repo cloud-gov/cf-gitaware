@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/18F/cf-gitaware/metadata"
 	"github.com/cloudfoundry/cli/plugin"
-	"github.com/codeskyblue/go-sh"
 
 	"fmt"
 	"io/ioutil"
@@ -17,7 +17,7 @@ func (c *PushMetadataPlugin) Run(cliConnection plugin.CliConnection, args []stri
 	if args[0] != pluginCommand {
 		return
 	}
-	output, _ := sh.Command("git", "rev-parse", "HEAD").Output()
+	output, _ := metadata.GetRevision(".")
 	fmt.Println("SHA" + string(output))
 
 	err := ioutil.WriteFile(".cfmetadata", output, 0644)
