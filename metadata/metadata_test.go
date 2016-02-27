@@ -40,7 +40,8 @@ func createTestRepo() {
 func TestGetRevision(t *testing.T) {
 	createTestRepo()
 
-	rev := GetRevision(testRepoPath)
+	rev, err := GetRevision(testRepoPath)
+	check(err)
 	chars := len(rev)
 	if chars != 41 {
 		t.Errorf("Expected GetRevision to return a 41-character string, Found %s\n", rev)
