@@ -30,6 +30,7 @@ func createTestRepo() {
 		"git",
 		"commit",
 		"--allow-empty",
+		"--author=\"Foo Bar <foo@bar.com>\"",
 		"-m", "\"test commit\"",
 		sh.Dir(testRepoPath),
 	).Run()
