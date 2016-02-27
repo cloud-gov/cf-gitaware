@@ -56,6 +56,6 @@ func (c *PushMetadataPlugin) GetMetadata() plugin.PluginMetadata {
 	}
 }
 
-func main () {
+func main() {
 	plugin.Start(new(PushMetadataPlugin))
 }
