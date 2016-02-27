@@ -2,4 +2,6 @@ language: go
 go:
 - '1.6'
 before_script:
+- git config --global user.email "test@example.com"
+- git config --global user.name "Test User"
 - go vet ./...
