@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 )
 
-var pluginCommand = "git-push"
+const pluginCommand = "git-push"
 
 type PushMetadataPlugin struct {
 }

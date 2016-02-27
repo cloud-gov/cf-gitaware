@@ -16,17 +16,18 @@ func check(e error) {
 	}
 }
 
-func createTestRepo() {
-	// clean up existing repository
+func cleanUpExistingRepo() {
 	err := os.RemoveAll(testRepoPath)
 	check(err)
+}
 
-	// create new repository
-	err = sh.Command("git", "init", testRepoPath).Run()
+func createEmptyRepo() {
+	err := sh.Command("git", "init", testRepoPath).Run()
 	check(err)
+}
 
-	// create an initial commit
-	err = sh.Command(
+func createInitialCommit() {
+	err := sh.Command(
 		"git",
 		"commit",
 		"--allow-empty",
@@ -36,7 +37,12 @@ func createTestRepo() {
 	check(err)
 }
 
-// current git sha
+func createTestRepo() {
+	cleanUpExistingRepo()
+	createEmptyRepo()
+	createInitialCommit()
+}
+
 func TestGetRevision(t *testing.T) {
 	createTestRepo()
 
