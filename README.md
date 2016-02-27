@@ -30,3 +30,9 @@ godep restore
 ```
 
 See [Developing cf CLI Plugins](https://docs.cloudfoundry.org/cf-cli/develop-cli-plugins.html) for more information.
+
+### Running tests
+
+```bash
+go test ./...
+```

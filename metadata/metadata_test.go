@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-const testRepoPath = "./tmp"
+const testRepoPath = "tmp"
 
 // https://gobyexample.com/writing-files
 func check(e error) {
