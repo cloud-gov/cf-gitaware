@@ -1,4 +1,4 @@
-# Cloud Foundry Git-Aware
+# Cloud Foundry Git-Aware [![Build Status](https://travis-ci.org/18F/cf-gitaware.svg?branch=master)](https://travis-ci.org/18F/cf-gitaware)
 
 Plugin to make the Cloud Foundry CLI include Git metadata when deploying.
 
