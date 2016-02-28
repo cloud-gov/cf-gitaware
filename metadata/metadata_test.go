@@ -3,6 +3,7 @@ package metadata
 import (
 	"github.com/codeskyblue/go-sh"
 
+	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -51,5 +52,12 @@ func TestGetRevision(t *testing.T) {
 	chars := len(rev)
 	if chars != 41 {
 		t.Errorf("Expected GetRevision to return a 41-character string, Found %s\n", rev)
+	}
+
+	tempDirName, err := ioutil.TempDir("", "metadata_test")
+	check(err)
+	rev, err = GetRevision(tempDirName)
+	if err == nil {
+		t.Errorf("Expected GetRevision to give an error when the directory isn't a repository.")
 	}
 }
