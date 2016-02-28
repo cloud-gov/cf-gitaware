@@ -34,5 +34,5 @@ See [Developing cf CLI Plugins](https://docs.cloudfoundry.org/cf-cli/develop-cli
 ### Running tests
 
 ```bash
-go test ./...
+ginkgo ./...
 ```
