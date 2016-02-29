@@ -30,9 +30,18 @@ func createInitialCommit(repoPath string) error {
 
 func createTestRepo() (string, error) {
 	path, err := createTempDir()
-	createEmptyRepo(path)
-	createInitialCommit(path)
-	return path, err
+	if err != nil {
+		return "", err
+	}
+	err = createEmptyRepo(path)
+	if err != nil {
+		return "", err
+	}
+	err = createInitialCommit(path)
+	if err != nil {
+		return "", err
+	}
+	return path, nil
 }
 
 var _ = Describe("Metadata", func() {
@@ -49,6 +58,7 @@ var _ = Describe("Metadata", func() {
 		It("returns an error when the directory isn't a repository", func() {
 			tempDirName, err := createTempDir()
 			Expect(err).NotTo(HaveOccurred())
+
 			_, err = GetRevision(tempDirName)
 			Expect(err).To(HaveOccurred())
 		})
