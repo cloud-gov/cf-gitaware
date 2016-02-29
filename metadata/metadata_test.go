@@ -13,32 +13,22 @@ import (
 
 const testRepoPath = "tmp"
 
-// https://gobyexample.com/writing-files
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
+func cleanUpExistingRepo() error {
+	return os.RemoveAll(testRepoPath)
 }
 
-func cleanUpExistingRepo() {
-	err := os.RemoveAll(testRepoPath)
-	check(err)
+func createEmptyRepo() error {
+	return sh.Command("git", "init", testRepoPath).Run()
 }
 
-func createEmptyRepo() {
-	err := sh.Command("git", "init", testRepoPath).Run()
-	check(err)
-}
-
-func createInitialCommit() {
-	err := sh.Command(
+func createInitialCommit() error {
+	return sh.Command(
 		"git",
 		"commit",
 		"--allow-empty",
 		"-m", "\"test commit\"",
 		sh.Dir(testRepoPath),
 	).Run()
-	check(err)
 }
 
 func createTestRepo() {
@@ -53,13 +43,13 @@ var _ = Describe("Metadata", func() {
 			createTestRepo()
 
 			rev, err := GetRevision(testRepoPath)
-			check(err)
+			Expect(err).NotTo(HaveOccurred())
 			Expect(len(rev)).To(Equal(41))
 		})
 
 		It("returns an error when the directory isn't a repository", func() {
 			tempDirName, err := ioutil.TempDir("", "metadata_test")
-			check(err)
+			Expect(err).NotTo(HaveOccurred())
 			_, err = GetRevision(tempDirName)
 			Expect(err).To(HaveOccurred())
 		})
