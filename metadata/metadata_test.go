@@ -31,4 +31,18 @@ var _ = Describe("Metadata", func() {
 			Expect(err).To(HaveOccurred())
 		})
 	})
+
+	Describe(".GetMetadata()", func() {
+		It("returns the relevant information about the repository", func() {
+			err := InitializeRepo(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+
+			data, err := GetMetadata(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(data.Vcs).To(Equal("git"))
+			Expect(len(data.Ref)).To(Equal(41))
+			Expect(data.Branch).To(Equal("master"))
+		})
+	})
 })
