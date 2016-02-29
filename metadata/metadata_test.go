@@ -8,9 +8,17 @@ import (
 )
 
 var _ = Describe("Metadata", func() {
+	var repoPath string
+
+	BeforeEach(func() {
+		var err error
+		repoPath, err = CreateTempDir()
+		Expect(err).NotTo(HaveOccurred())
+	})
+
 	Describe(".GetRevision()", func() {
 		It("returns a 41-character string", func() {
-			repoPath, err := CreateTestRepo()
+			err := InitializeRepo(repoPath)
 			Expect(err).NotTo(HaveOccurred())
 
 			rev, err := GetRevision(repoPath)
@@ -19,10 +27,7 @@ var _ = Describe("Metadata", func() {
 		})
 
 		It("returns an error when the directory isn't a repository", func() {
-			tempDirName, err := CreateTempDir()
-			Expect(err).NotTo(HaveOccurred())
-
-			_, err = GetRevision(tempDirName)
+			_, err := GetRevision(repoPath)
 			Expect(err).To(HaveOccurred())
 		})
 	})

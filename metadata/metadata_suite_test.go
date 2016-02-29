@@ -35,15 +35,10 @@ func createInitialCommit(repoPath string) error {
 	).Run()
 }
 
-func CreateTestRepo() (string, error) {
-	path, err := CreateTempDir()
+func InitializeRepo(path string) error {
+	err := createEmptyRepo(path)
 	if err != nil {
-		return path, err
+		return err
 	}
-	err = createEmptyRepo(path)
-	if err != nil {
-		return path, err
-	}
-	err = createInitialCommit(path)
-	return path, err
+	return createInitialCommit(path)
 }
