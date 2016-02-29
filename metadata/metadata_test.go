@@ -16,14 +16,33 @@ var _ = Describe("Metadata", func() {
 		Expect(err).NotTo(HaveOccurred())
 	})
 
+	Describe(".GetBranch()", func() {
+		It("returns the branch name", func() {
+			err := InitializeRepo(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+
+			err = SetBranch(repoPath, "foo")
+			Expect(err).NotTo(HaveOccurred())
+
+			branch, err := GetBranch(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(branch).To(Equal("foo"))
+		})
+
+		It("returns an error when the directory isn't a repository", func() {
+			_, err := GetBranch(repoPath)
+			Expect(err).To(HaveOccurred())
+		})
+	})
+
 	Describe(".GetRevision()", func() {
-		It("returns a 41-character string", func() {
+		It("returns the SHA", func() {
 			err := InitializeRepo(repoPath)
 			Expect(err).NotTo(HaveOccurred())
 
 			rev, err := GetRevision(repoPath)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(len(rev)).To(Equal(41))
+			Expect(len(rev)).To(Equal(40))
 		})
 
 		It("returns an error when the directory isn't a repository", func() {
@@ -41,7 +60,7 @@ var _ = Describe("Metadata", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(data.Vcs).To(Equal("git"))
-			Expect(len(data.Ref)).To(Equal(41))
+			Expect(len(data.Ref)).To(Equal(40))
 			Expect(data.Branch).To(Equal("master"))
 		})
 	})

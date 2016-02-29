@@ -42,3 +42,13 @@ func InitializeRepo(path string) error {
 	}
 	return createInitialCommit(path)
 }
+
+func SetBranch(repoPath string, branch string) error {
+	return sh.Command(
+		"git",
+		"checkout",
+		"-b",
+		branch,
+		sh.Dir(repoPath),
+	).Run()
+}
