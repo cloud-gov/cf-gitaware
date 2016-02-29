@@ -18,9 +18,9 @@ func (c *PushMetadataPlugin) Run(cliConnection plugin.CliConnection, args []stri
 		return
 	}
 	output, _ := metadata.GetRevision(".")
-	fmt.Println("SHA" + string(output))
+	fmt.Println("SHA" + output)
 
-	err := ioutil.WriteFile(".cfmetadata", output, 0644)
+	err := ioutil.WriteFile(".cfmetadata", []byte(output), 0644)
 	if err != nil {
 		fmt.Println("error " + err.Error())
 	}
