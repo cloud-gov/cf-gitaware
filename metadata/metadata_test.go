@@ -8,47 +8,46 @@ import (
 	. "github.com/onsi/gomega"
 
 	"io/ioutil"
-	"os"
 )
 
-const testRepoPath = "tmp"
-
-func cleanUpExistingRepo() error {
-	return os.RemoveAll(testRepoPath)
+func createTempDir() (string, error) {
+	return ioutil.TempDir("", "metadata_test")
 }
 
-func createEmptyRepo() error {
-	return sh.Command("git", "init", testRepoPath).Run()
+func createEmptyRepo(path string) error {
+	return sh.Command("git", "init", path).Run()
 }
 
-func createInitialCommit() error {
+func createInitialCommit(repoPath string) error {
 	return sh.Command(
 		"git",
 		"commit",
 		"--allow-empty",
 		"-m", "\"test commit\"",
-		sh.Dir(testRepoPath),
+		sh.Dir(repoPath),
 	).Run()
 }
 
-func createTestRepo() {
-	cleanUpExistingRepo()
-	createEmptyRepo()
-	createInitialCommit()
+func createTestRepo() (string, error) {
+	path, err := createTempDir()
+	createEmptyRepo(path)
+	createInitialCommit(path)
+	return path, err
 }
 
 var _ = Describe("Metadata", func() {
 	Describe(".GetRevision()", func() {
 		It("returns a 41-character string", func() {
-			createTestRepo()
+			repoPath, err := createTestRepo()
+			Expect(err).NotTo(HaveOccurred())
 
-			rev, err := GetRevision(testRepoPath)
+			rev, err := GetRevision(repoPath)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(len(rev)).To(Equal(41))
 		})
 
 		It("returns an error when the directory isn't a repository", func() {
-			tempDirName, err := ioutil.TempDir("", "metadata_test")
+			tempDirName, err := createTempDir()
 			Expect(err).NotTo(HaveOccurred())
 			_, err = GetRevision(tempDirName)
 			Expect(err).To(HaveOccurred())
