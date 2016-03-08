@@ -5,7 +5,6 @@ import (
 	"github.com/cloudfoundry/cli/plugin"
 
 	"fmt"
-	"io/ioutil"
 )
 
 const pluginCommand = "git-push"
@@ -17,10 +16,14 @@ func (c *PushMetadataPlugin) Run(cliConnection plugin.CliConnection, args []stri
 	if args[0] != pluginCommand {
 		return
 	}
-	output, _ := metadata.GetRevision(".")
-	fmt.Println("SHA" + output)
+	data, err := metadata.GetMetadata(".")
+	if err == nil {
+		fmt.Println("SHA" + data.Ref)
+	} else {
+		fmt.Println("error " + err.Error())
+	}
 
-	err := ioutil.WriteFile(".cfmetadata", []byte(output), 0644)
+	err = metadata.WriteMetadata(".cfmetadata", data)
 	if err != nil {
 		fmt.Println("error " + err.Error())
 	}

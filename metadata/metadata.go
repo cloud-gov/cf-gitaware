@@ -1,6 +1,8 @@
 package metadata
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"strings"
 
 	"github.com/codeskyblue/go-sh"
@@ -9,8 +11,8 @@ import (
 // RepoMetadata represents the current state of a repository.
 type RepoMetadata struct {
 	Vcs    string `json:"vcs"`
-	Ref    string `json:"ref"`
 	Branch string `json:"branch"`
+	Ref    string `json:"ref"`
 }
 
 // toString takes a slice and converts it to a string, with leading and trailing whitespace removed.
@@ -62,4 +64,13 @@ func GetMetadata(repoPath string) (RepoMetadata, error) {
 	data.Ref = ref
 
 	return data, err
+}
+
+// WriteMetadata writes the provided repository metadata to the given path. The directory containing the file should already exist.
+func WriteMetadata(filePath string, data RepoMetadata) error {
+	jsonBytes, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(filePath, jsonBytes, 0644)
 }

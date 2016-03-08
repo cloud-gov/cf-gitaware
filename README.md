@@ -17,7 +17,15 @@ cf install-plugin cf-gitaware
 cf git-push <args>
 ```
 
-Accepts all the normal arguments as a normal `cf push`.
+Accepts all the normal arguments as a normal `cf push`. This will write a `.cfmetadata` file to your current path, with the following contents:
+
+```json
+{
+  "vcs": "git",
+  "branch": "<branchname>",
+  "ref": "<the SHA of the local repository>"
+}
+```
 
 ## Development
 

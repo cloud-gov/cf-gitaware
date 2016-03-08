@@ -64,4 +64,20 @@ var _ = Describe("Metadata", func() {
 			Expect(data.Branch).To(Equal("master"))
 		})
 	})
+
+	Describe(".WriteMetadata()", func() {
+		It("writes to the provided filename", func() {
+			err := InitializeRepo(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+
+			tempDir, err := CreateTempDir()
+			Expect(err).NotTo(HaveOccurred())
+			dataFile := tempDir + "/.cfmetadata"
+
+			data, err := GetMetadata(repoPath)
+			Expect(err).NotTo(HaveOccurred())
+
+			WriteMetadata(dataFile, data)
+		})
+	})
 })
