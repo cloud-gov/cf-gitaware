@@ -8,13 +8,6 @@ import (
 	"github.com/codeskyblue/go-sh"
 )
 
-// RepoMetadata represents the current state of a repository.
-type RepoMetadata struct {
-	Vcs    string `json:"vcs"`
-	Branch string `json:"branch"`
-	Ref    string `json:"ref"`
-}
-
 // toString takes a slice and converts it to a string, with leading and trailing whitespace removed.
 func toString(in []byte) string {
 	// http://stackoverflow.com/a/18615786/358804
