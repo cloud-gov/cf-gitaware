@@ -1,4 +1,46 @@
-# README
+# Cloud Foundry Git-Aware [![Build Status](https://travis-ci.org/18F/cf-gitaware.svg?branch=master)](https://travis-ci.org/18F/cf-gitaware)
 
+Plugin to make the Cloud Foundry CLI include Git metadata when deploying.
 
-To install: go build && cf install-plugin cf-gitaware
+## Installation
+
+Requires Cloud Foundry CLI >= v6.7.0.
+
+```bash
+go build
+cf install-plugin cf-gitaware
+```
+
+## Usage
+
+```bash
+cf git-push <args>
+```
+
+Accepts all the normal arguments as a normal `cf push`. This will write a `.cfmetadata` file to your current path, with the following contents:
+
+```json
+{
+  "vcs": "git",
+  "branch": "<branchname>",
+  "ref": "<the SHA of the local repository>"
+}
+```
+
+## Development
+
+This project uses [Godep](https://github.com/tools/godep) to manage its dependencies.
+
+```bash
+go get -u github.com/tools/godep github.com/18F/cf-gitaware
+cd $GOPATH/src/github.com/18F/cf-gitaware
+godep restore
+```
+
+See [Developing cf CLI Plugins](https://docs.cloudfoundry.org/cf-cli/develop-cli-plugins.html) for more information.
+
+### Running tests
+
+```bash
+ginkgo ./...
+```

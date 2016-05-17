@@ -1,14 +1,13 @@
 package main
 
 import (
+	"github.com/18F/cf-gitaware/metadata"
 	"github.com/cloudfoundry/cli/plugin"
-	"github.com/codeskyblue/go-sh"
 
 	"fmt"
-	"io/ioutil"
 )
 
-var pluginCommand = "git-push"
+const pluginCommand = "git-push"
 
 type PushMetadataPlugin struct {
 }
@@ -17,10 +16,14 @@ func (c *PushMetadataPlugin) Run(cliConnection plugin.CliConnection, args []stri
 	if args[0] != pluginCommand {
 		return
 	}
-	output, _ := sh.Command("git", "rev-parse", "HEAD").Output()
-	fmt.Println("SHA" + string(output))
+	data, err := metadata.GetMetadata(".")
+	if err == nil {
+		fmt.Println("SHA" + data.Ref)
+	} else {
+		fmt.Println("error " + err.Error())
+	}
 
-	err := ioutil.WriteFile(".cfmetadata", output, 0644)
+	err = metadata.WriteMetadata(".cfmetadata", data)
 	if err != nil {
 		fmt.Println("error " + err.Error())
 	}
@@ -56,6 +59,6 @@ func (c *PushMetadataPlugin) GetMetadata() plugin.PluginMetadata {
 	}
 }
 
-func main () {
+func main() {
 	plugin.Start(new(PushMetadataPlugin))
 }
